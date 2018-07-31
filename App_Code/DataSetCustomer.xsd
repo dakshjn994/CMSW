@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSetCustomer" targetNamespace="http://tempuri.org/DataSetCustomer.xsd" xmlns:mstns="http://tempuri.org/DataSetCustomer.xsd" xmlns="http://tempuri.org/DataSetCustomer.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="ProjectConn" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ProjectConn (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.ProjectConn.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="View_3TableAdapter" GeneratorDataComponentClassName="View_3TableAdapter" Name="View_3" UserDataComponentName="View_3TableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="ProjectConn (Web.config)" DbObjectName="Project.dbo.View_3" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT Customer_name, Customer_email_id, Mobile_No, Customer_address FROM dbo.View_3</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Customer_name" DataSetColumn="Customer_name" />
+              <Mapping SourceColumn="Customer_email_id" DataSetColumn="Customer_email_id" />
+              <Mapping SourceColumn="Mobile_No" DataSetColumn="Mobile_No" />
+              <Mapping SourceColumn="Customer_address" DataSetColumn="Customer_address" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSetCustomer" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DataSetCustomer" msprop:Generator_DataSetName="DataSetCustomer">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="View_3" msprop:Generator_TableClassName="View_3DataTable" msprop:Generator_TableVarName="tableView_3" msprop:Generator_TablePropName="View_3" msprop:Generator_RowDeletingName="View_3RowDeleting" msprop:Generator_RowChangingName="View_3RowChanging" msprop:Generator_RowEvHandlerName="View_3RowChangeEventHandler" msprop:Generator_RowDeletedName="View_3RowDeleted" msprop:Generator_UserTableName="View_3" msprop:Generator_RowChangedName="View_3RowChanged" msprop:Generator_RowEvArgName="View_3RowChangeEvent" msprop:Generator_RowClassName="View_3Row">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Customer_name" msprop:Generator_ColumnVarNameInTable="columnCustomer_name" msprop:Generator_ColumnPropNameInRow="Customer_name" msprop:Generator_ColumnPropNameInTable="Customer_nameColumn" msprop:Generator_UserColumnName="Customer_name">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="45" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Customer_email_id" msprop:Generator_ColumnVarNameInTable="columnCustomer_email_id" msprop:Generator_ColumnPropNameInRow="Customer_email_id" msprop:Generator_ColumnPropNameInTable="Customer_email_idColumn" msprop:Generator_UserColumnName="Customer_email_id">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="30" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Mobile_No" msprop:Generator_ColumnVarNameInTable="columnMobile_No" msprop:Generator_ColumnPropNameInRow="Mobile_No" msprop:Generator_ColumnPropNameInTable="Mobile_NoColumn" msprop:Generator_UserColumnName="Mobile_No" type="xs:decimal" />
+              <xs:element name="Customer_address" msprop:Generator_ColumnVarNameInTable="columnCustomer_address" msprop:Generator_ColumnPropNameInRow="Customer_address" msprop:Generator_ColumnPropNameInTable="Customer_addressColumn" msprop:Generator_UserColumnName="Customer_address">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:View_3" />
+      <xs:field xpath="mstns:Customer_email_id" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

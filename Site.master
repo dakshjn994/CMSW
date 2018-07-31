@@ -1,0 +1,99 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Site.master.cs" Inherits="Site" %>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    
+    <title><%: Page.Title %> - Vallabh Innovation</title>
+    <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server"></asp:ContentPlaceHolder>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,intial-scale=1.0" />
+    <link href="StyleSheet/bootstrap.min.css" rel="stylesheet" />
+    <link runat="server" rel="shortcut icon" href="Img/favicon.ico" type="image/x-icon"/>
+    <link runat="server" rel="icon" href="Img/favicon.ico" type="image/ico"/>
+    <link href="Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="/Scripts/jquery-2.2.0.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
+    <%--<script type="text/javascript">
+        function preventBack() { window.history.forward(); }
+        setTimeout("preventBack()", 10);
+        window.onunload = function () { null };
+    </script>--%>
+</head>
+<body style="background-image:url(/Img/back.jpg);">
+<form id="form1" runat="server" autocomplete="off">
+   <nav class="navbar navbar-default navbar-static-top">
+  <div class="container-fluid" id="header" runat="server">
+    <div class="navbar-header">
+       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <!--<span class="sr-only">Toggle navigation</span>-->
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a href="/Webpages/index.aspx" class="navbar-brand">Vallabh Innovation</a>
+        </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <ul class="nav navbar-nav navbar-right">
+<li><a runat="server" href="~/Webpages/Profile.aspx" class="text-capitalize" id="NAME"></a></li>
+<li><a id="Main" runat="server" href="/Webpages/Main.aspx">Shop</a></li>
+<li><a runat="server" id="Administrator" href="Webpages/Products.aspx">Admin</a></li>
+<li><a href="/Webpages/About.aspx">About</a></li>
+<li><a href="/Webpages/Contact.aspx">Contact</a></li>
+<li><a runat="server" id="Register"  href="/Webpages/Register.aspx">Register</a></li>
+<li><a runat="server" id="Login" href="/Webpages/Login.aspx">Login</a></li>
+      <li><a runat="server" id="Approval" href="/Webpages/Approval.aspx">Approval</a></li>
+      <li><a id="Logout" runat="server" onserverclick="NAME_ServerClick">Logout</a> </li>
+    <%--<ul class=" dropdown-menu">
+        <li><a runat="server" id="Logout" onserverclick="NAME_ServerClick">Logout</a></li>
+        <li><a>Buy</a></li>
+      </ul>
+    </li>--%>
+<li><a id="Cart" runat="server" href="/Webpages/Cart.aspx"><asp:Image ID="Image2" runat="server" Height="16" Width="16" ImageUrl="~/Img/cart.png" AlternateText="Cart" /><asp:Label ID="lblCartValue" runat="server" Text="(0)"></asp:Label></a></li>
+  </ul>
+    </div>
+   </div>
+  </nav>
+ <div></div>
+    <div>
+        <br />
+            <asp:ScriptManager runat="server"></asp:ScriptManager>
+            <%--<asp:UpdatePanel ID="UpdatePanel1" UpdateMode="Conditional" runat="server">
+                 <ContentTemplate>--%>
+        <div class="container" style="background-color:white;width:100%">
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+                      <%--</ContentTemplate>
+                </asp:UpdatePanel>--%>
+            <br /><br />
+        <div class="modal-footer">
+                        <div style="float:left">
+             Vallabh Innovation. All Rights Reserved.
+                </div>
+    <div id="share-buttons" style="float:right">
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/Vallabh-Innovation-1784888691746015/" target="_blank">
+    <img src="/Img/facebook.png" alt="Facebook" />
+    </a>
+    <!-- Google+ -->
+    <a href="https://plus.google.com/" target="_blank">
+    <img src="/Img/google.png" alt="Google" />
+    </a>
+    <!-- LinkedIn -->
+    <a href="http://www.linkedin.com/" target="_blank">
+    <img src="/Img/linkedin.png" alt="LinkedIn" />
+   </a>
+    <!-- Twitter -->
+    <a class="img-circle" href="https://twitter.com/" target="_blank">
+    <img  src="/Img/twitter.png" alt="Twitter" />
+    </a>
+        <a class="img-circle" id="error" runat="server" href="/Webpages/ErrorReporting.aspx" target="_blank">
+            <img src="/Img/notification_error.png" />
+            </a>
+            </div>
+         </div>
+    </div>
+        </div>
+        </form>
+    <br /><br />
+</body>
+</html>

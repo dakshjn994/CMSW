@@ -1,0 +1,160 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Webpages_Cart : System.Web.UI.Page
+{
+    string name;
+    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ProjectConn"].ConnectionString);
+    DataTable dtCart = new DataTable();
+    string[] ids;
+    string matchid;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (Session["Name"] != null)
+        {
+            name = (string)Session["Name"];
+        }
+        else
+        {
+            name = null;
+        }
+        string id;
+        //if (Session["idseq"] != null)
+        //{
+            //string idsequential = (string)Session["idseq"];
+           // ids = idsequential.Split(' ');
+          //  matchid = datahelp(ids);
+        //}
+        if (Session["bool"] != null)
+        {
+            bool ab = (bool)Session["bool"];
+            id = (string)Request.QueryString["Id"];
+            if (ab == true)
+            {
+                con.Open();
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "Select Name,Money,Image from Image where Id=" + id;
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                if (Session["Cart"] == null)
+                {
+                    lblStatus.Visible = false;
+                    da.Fill(dtCart);
+                    Session["Cart"] = dtCart;
+                    con.Close();
+                }
+                else
+                {
+                    lblStatus.Visible = false;
+                    DataTable data = Session["Cart"] as DataTable;
+                    da.Fill(dtCart);
+                    dtCart.Merge(data);
+                    dtCart.AcceptChanges();
+                    Session["Cart"] = dtCart;
+                    con.Close();
+                }
+            }
+            else
+            {
+                if (Session["Cart"] != null)
+                {
+                    dtCart = Session["Cart"] as DataTable;
+                }
+            }
+            Session["bool"] = false;
+            GridView1.DataSource = dtCart;
+            GridView1.DataBind();
+        }
+    }
+    protected void imgDeleteProduct_Click(object sender, ImageClickEventArgs e)
+    {
+        try
+        {
+            DataTable dtCart = (DataTable)Session["Cart"];
+            string Name = Convert.ToString((ImageButton)sender).CommandArgument);
+            dtCart.Rows.RemoveAt((Name));
+
+            dtCart = RegenerateDataTable(dtCart);
+            GridView1.DataSource = dtCart;
+            GridView1.DataBind();
+            Session["Cart"] = dtCart;
+            if (dtCart.Rows.Count == 0)
+            {
+                btnProceed.Enabled = false;//dvSendOrder.Visible = false;
+            }
+
+            Label lblMaster = (Label)this.Master.FindControl("lblCartValue");
+
+
+            if (lblMaster != null)
+            {
+                if (Session["Cart"] == null)
+                {
+                    lblMaster.Text = "(0)";
+                }
+                  if(Session["Cart"]!=null)
+                  {
+                     DataTable dt = (DataTable)Session["Cart"];
+                     lblMaster.Text = "(" + Convert.ToString(dt.Rows.Count) + ")";
+                  }
+            }
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("ErrorPa.aspx?Id=" + ex.Message.ToString());
+        }
+    }
+    private DataTable RegenerateDataTable(DataTable dt)
+    {
+        DataTable dtDup = dt.Clone();
+        try
+        {
+            foreach (DataRow row in dt.Rows)
+            {
+                DataRow drNew = dtDup.NewRow();
+                drNew[1] = row[1];
+                drNew[2] = row[2];
+                drNew[3] = row[3];
+                drNew[4] = row[4];
+                dtDup.Rows.Add(drNew);
+            }
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("ErrorPa.aspx?Id=" + ex.Message.ToString());
+        }
+        return dtDup;
+    }
+    public string datahelp(string[] name)
+    {
+        int i,j;
+        int a=name.Length;
+        for(i=0;i<a;i++)
+        {
+            for (j = 0; j < a;j++ )
+            {
+                if(name[i]==name[j])
+                {
+                    if(i!=j)
+                    {
+                        return name[i];
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    protected void btnProceed_Click(object sender, EventArgs e)
+    {
+        if(name==null)
+        {
+            Response.Redirect("Login.aspx");
+        }
+    }
+    }

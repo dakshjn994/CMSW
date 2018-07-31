@@ -1,0 +1,61 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="AdminMaster.master.cs" Inherits="Webpages_Admin_AdminMaster" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title><%: Page.Title%> - Admin</title>
+    <link href="../../StyleSheet/bootstrap.min.css" rel="stylesheet" />
+    <link runat="server" rel="shortcut icon" href="Img/favicon.ico" type="image/x-icon"/>
+    <link runat="server" rel="icon" href="Img/favicon.ico" type="image/ico"/>
+    <script src="../../Scripts/jquery-2.2.0.min.js"></script>
+    <script src="../../Scripts/bootstrap.min.js"></script>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body style="background-image:url(../Img/back.jpg);" aria-autocomplete="none">
+    
+    <form id="form1" runat="server">
+        <nav class="navbar navbar-default navbar-static-top" style="background-image:url(../../Img/SKY.jpg");">
+  <div class="container-fluid" id="header"  runat="server">
+    <div class="navbar-header">
+       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <!--<span class="sr-only">Toggle navigation</span>-->
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+        <a href="/Webpages/index.aspx" class="navbar-brand">Vallabh Innovation</a>
+        </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+  <ul class="nav navbar-nav navbar-right">
+      <li><a id="NAME" runat="server"></a></li>
+<li><a runat="server" id="Administrator" href="~/Webpages/Products.aspx">Products</a></li>
+      <li><a href="Admin.aspx">Insert Products</a></li>
+      <li><a href="Customers.aspx">Customer Records</a></li>
+      <li><a href="ApprovalOrder.aspx">Approve Orders</a></li>
+      <li><a href="History.aspx">Login History</a></li>
+      <li><a id="Logout" runat="server" class="text-capitalize" onserverclick="NAME_ServerClick">Logout</a></li>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Reports<span class="caret"></span></a>
+    <ul class="dropdown-menu" style="margin-top:20px;width:40px">
+        <li><a href="CustomerReport.aspx">Customer Report</a></li>
+        <li><a href="Test.aspx">Order Report</a></li>
+        <li><a href="BillReport.aspx">Sales Report</a></li>
+    </ul>
+  </li>
+  </ul>
+    </div>
+   </div>
+  </nav>
+    <div class="container" style="background-color:white">
+        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+        <div>
+            <hr />
+            <div>Vallabh Innovation.We Innovate Fabric</div>
+        </div>
+    </div>
+    </form>
+    <br /><br />
+</body>
+</html>

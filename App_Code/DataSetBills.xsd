@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSetBills" targetNamespace="http://tempuri.org/DataSetBills.xsd" xmlns:mstns="http://tempuri.org/DataSetBills.xsd" xmlns="http://tempuri.org/DataSetBills.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Web.config" AppSettingsPropertyName="ProjectConn" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="ProjectConn (Web.config)" ParameterPrefix="@" PropertyReference="AppConfig.System.Configuration.ConfigurationManager.0.ConnectionStrings.ProjectConn.ConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ViewBillTableAdapter" GeneratorDataComponentClassName="ViewBillTableAdapter" Name="ViewBill" UserDataComponentName="ViewBillTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="ProjectConn (Web.config)" DbObjectName="Project.dbo.ViewBill" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT Bill_Id, Customer_Email, Product_Amount, No_Products, Delivery_Address, Bill_Date FROM dbo.ViewBill</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="Bill_Id" DataSetColumn="Bill_Id" />
+              <Mapping SourceColumn="Customer_Email" DataSetColumn="Customer_Email" />
+              <Mapping SourceColumn="Product_Amount" DataSetColumn="Product_Amount" />
+              <Mapping SourceColumn="No_Products" DataSetColumn="No_Products" />
+              <Mapping SourceColumn="Delivery_Address" DataSetColumn="Delivery_Address" />
+              <Mapping SourceColumn="Bill_Date" DataSetColumn="Bill_Date" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSetBills" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_DataSetName="DataSetBills" msprop:Generator_UserDSName="DataSetBills">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="ViewBill" msprop:Generator_TableClassName="ViewBillDataTable" msprop:Generator_TableVarName="tableViewBill" msprop:Generator_TablePropName="ViewBill" msprop:Generator_RowDeletingName="ViewBillRowDeleting" msprop:Generator_RowChangingName="ViewBillRowChanging" msprop:Generator_RowEvHandlerName="ViewBillRowChangeEventHandler" msprop:Generator_RowDeletedName="ViewBillRowDeleted" msprop:Generator_UserTableName="ViewBill" msprop:Generator_RowChangedName="ViewBillRowChanged" msprop:Generator_RowEvArgName="ViewBillRowChangeEvent" msprop:Generator_RowClassName="ViewBillRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Bill_Id" msprop:Generator_ColumnVarNameInTable="columnBill_Id" msprop:Generator_ColumnPropNameInRow="Bill_Id" msprop:Generator_ColumnPropNameInTable="Bill_IdColumn" msprop:Generator_UserColumnName="Bill_Id" type="xs:int" minOccurs="0" />
+              <xs:element name="Customer_Email" msprop:Generator_ColumnVarNameInTable="columnCustomer_Email" msprop:Generator_ColumnPropNameInRow="Customer_Email" msprop:Generator_ColumnPropNameInTable="Customer_EmailColumn" msprop:Generator_UserColumnName="Customer_Email" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Product_Amount" msprop:Generator_ColumnVarNameInTable="columnProduct_Amount" msprop:Generator_ColumnPropNameInRow="Product_Amount" msprop:Generator_ColumnPropNameInTable="Product_AmountColumn" msprop:Generator_UserColumnName="Product_Amount" type="xs:int" minOccurs="0" />
+              <xs:element name="No_Products" msprop:Generator_ColumnVarNameInTable="columnNo_Products" msprop:Generator_ColumnPropNameInRow="No_Products" msprop:Generator_ColumnPropNameInTable="No_ProductsColumn" msprop:Generator_UserColumnName="No_Products" type="xs:int" minOccurs="0" />
+              <xs:element name="Delivery_Address" msprop:Generator_ColumnVarNameInTable="columnDelivery_Address" msprop:Generator_ColumnPropNameInRow="Delivery_Address" msprop:Generator_ColumnPropNameInTable="Delivery_AddressColumn" msprop:Generator_UserColumnName="Delivery_Address" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2147483647" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Bill_Date" msprop:Generator_ColumnVarNameInTable="columnBill_Date" msprop:Generator_ColumnPropNameInRow="Bill_Date" msprop:Generator_ColumnPropNameInTable="Bill_DateColumn" msprop:Generator_UserColumnName="Bill_Date" type="xs:dateTime" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

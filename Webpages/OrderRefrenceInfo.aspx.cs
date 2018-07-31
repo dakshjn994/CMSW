@@ -1,0 +1,188 @@
+﻿using System;
+using System.Diagnostics;
+using System.Net.Mail;
+using System.Net;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using System.Collections;
+using System.Data;
+using System.Data.SqlClient;
+using System.Net;
+using System.IO;
+using System.Text;
+using System.Configuration;
+public partial class Webpages_OrderRefrenceInfo : System.Web.UI.Page
+{
+    DataTable dtCart = null;
+    Hashtable htCustInfo = null;
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        if (!IsPostBack)
+        {
+            //htCustInfo = (Hashtable)Session["htCustInfo"];
+            imgCheck.Visible = false;
+            divOrderInfo.InnerHtml = Convert.ToString(Session["OrderSummary"]);
+        }
+    }
+    public class SendEmail1
+    {
+        MailMessage mail;
+        NetworkCredential mailAuthentication;
+        static string FromID = "XXXX@gmail.com";                // ENTER FROM EMAIL ID
+        static string pwd = "XXXXXXXX";                             // PASSWORD
+
+        public void sendEMail(string ToEmail, string msg)
+        {
+            mail = new MailMessage(FromID, ToEmail, "My Subject", msg);
+            mailAuthentication = new NetworkCredential(FromID, pwd);
+            SmtpClient mailClient = new SmtpClient("smtp.gmail.com", 587);
+            mailClient.EnableSsl = true;
+            mailClient.Credentials = mailAuthentication;
+            mail.IsBodyHtml = true;
+            mailClient.Send(mail);
+        }
+
+    }
+    protected void btnConfirm_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            Object orderSummaryID = saveOrderSummaryWithClient();
+            SaveOrderDetails(orderSummaryID);
+
+            SendEmail1 s = new SendEmail1();
+            s.sendEMail(Convert.ToString(Session["Email"]),Convert.ToString(Session["OrderSummary"])+ "<br />Order Reference ID: <b>" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" + DateTime.Now.Day + "AP" + Convert.ToString(orderSummaryID) + "</b>");
+            Hashtable ht = (Hashtable)Session["htCustInfo"];
+            //sendMessage("You have an enquiry from " + (Convert.ToString(ht["Name"]) + " Please check your mail."));
+
+            Session["dtSelectProduct"] = null;
+            Session["Cart"] = null;
+            imgCheck.Visible = true;
+            ltrDone.Text = "Enquiry Information has been sent successfully.<br /> Please note your Order Reference ID is <b>" + DateTime.Now.Year + "" + DateTime.Now.Month + "" + DateTime.Now.Day + "AP" + Convert.ToString(orderSummaryID) + "</b><br />";
+            btnConfirm.Visible = false;
+
+            Label lblMaster = (Label)this.Master.FindControl("lblCartValue");
+
+
+            if (lblMaster != null)
+            {
+                if (Session["Cart"] == null)
+                {
+                    lblMaster.Text = "(0)";
+                }
+                else
+                {
+                    DataTable dt = (DataTable)Session["Cart"];
+                    lblMaster.Text = "(" + Convert.ToString(dt.Rows.Count) + ")";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("Error.aspx");
+        }
+    }
+    private void SaveOrderDetails(object orderSummaryID)
+    {
+        try
+        {
+            int ordSumID = Convert.ToInt32(orderSummaryID);
+            if (Session["Cart"] != null)
+            {
+                dtCart = (DataTable)Session["Cart"];
+            }
+            DataTable dtOrderDetail = new DataTable();
+            dtOrderDetail.Columns.Add("OrderSummaryID", typeof(int));
+            dtOrderDetail.Columns.Add("ProductID", typeof(int));
+            dtOrderDetail.Columns.Add("Quantity", typeof(int));
+            dtOrderDetail.Columns.Add("ProductPrice", typeof(int));
+
+            foreach (DataRow dr in dtCart.Rows)
+            {
+                dtOrderDetail.Rows.Add(ordSumID, Convert.ToInt32(dr["ProductID"]), Convert.ToInt32(dr["Quantity"]), Convert.ToInt32(dr["ProductPrice"]));
+            }
+            submitToDatabase(dtOrderDetail);
+
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("Error.aspx");
+        }
+
+    }
+    private void submitToDatabase(DataTable dtOrderDetail)
+    {
+        try
+        {
+            DBOperations obj = new DBOperations();
+            string conn = ConfigurationManager.ConnectionStrings["ProjectConn"].ConnectionString;
+            using (SqlConnection dbConnection = new SqlConnection(conn))
+            {
+                dbConnection.Open();
+                using (SqlBulkCopy s = new SqlBulkCopy(dbConnection))
+                {
+                    s.DestinationTableName = "OrderDetail";
+
+                    foreach (var column in dtOrderDetail.Columns)
+                        s.ColumnMappings.Add(column.ToString(), column.ToString());
+                    s.WriteToServer(dtOrderDetail);
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("Error.aspx");
+        }
+    }
+    private object saveOrderSummaryWithClient()
+    {
+        if (Session["Cart"] != null)
+        {
+            dtCart = (DataTable)Session["Cart"];
+        }
+        Object OrdSumID = null;
+        try
+        {
+            Hashtable htPrams = new Hashtable();
+            htCustInfo = (Hashtable)Session["htCustInfo"];
+            htPrams.Add("@CustomerName", Convert.ToString(htCustInfo["Name"]));
+            htPrams.Add("@EmailID", (string)htCustInfo["EmailID"]);
+            htPrams.Add("@MobileNo", (string)htCustInfo["Mobile"]);
+            htPrams.Add("@AlternameMobileNo", (string)htCustInfo["AltMobile"]);
+            htPrams.Add("@Address", (string)htCustInfo["Address"]);
+
+            htPrams.Add("@TotalAmount", (int)htCustInfo["Total"]);
+            htPrams.Add("@OrdID", System.DBNull.Value);
+            OrdSumID = DBOperations.ExecuteScalar(htPrams, "uspFillOrderInfo_Prasad");
+            btnConfirm.Enabled = false;
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("Error.aspx");
+        }
+        return OrdSumID;
+    }
+    private void sendMessage(string msg)
+    {
+        try
+        {
+            string strUrl = "http://api.mVaayoo.com/mvaayooapi/MessageCompose?user=revitechinfo@gmail.com:Pass@123&senderID=TEST SMS&receipientno=" + "9987339060" + "&msgtxt=" + msg + "";
+            WebRequest request = HttpWebRequest.Create(strUrl);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            Stream s = (Stream)response.GetResponseStream();
+            StreamReader readStream = new StreamReader(s);
+            string dataString = readStream.ReadToEnd();
+            response.Close();
+            s.Close();
+            readStream.Close();
+
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("Error.aspx");
+        }
+    }
+}

@@ -1,0 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Data;
+using System.Data.SqlClient;
+using System.Configuration;
+using CrystalDecisions.CrystalReports.Engine;
+using CrystalDecisions.Shared;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Webpages_Default : System.Web.UI.Page
+{
+    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["ProjectConn"].ConnectionString);
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        con.Open();
+        SqlDataAdapter da = new SqlDataAdapter("SELECT     Id, Order_Amount, Product_Quantity, Product_Id, Customer_email FROM         dbo.[Order]",con);
+        con.Close();
+        DataSetOrder ds = new DataSetOrder();
+        da.Fill(ds.View_1);
+        ReportDocument es=new ReportDocument();
+        es.SetDatabaseLogon("Vallabh","1234","RAJESH-VAIO","Project");
+        es.SetDataSource(ds);
+        es.Load(Server.MapPath("CrystalReportOrder.rpt"));
+        CrystalReportOrder rd = new CrystalReportOrder();
+        rd.SetDataSource(ds);
+        rd.Load(Server.MapPath("CrystalReportOrder.rpt"));
+        CrystalReportViewer1.ReportSource = es;
+    }
+}

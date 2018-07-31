@@ -1,0 +1,62 @@
+﻿.Contact
+{
+    font-family:'Segoe UI', Tahoma, Geneva, Vrdana, sans-serif;
+}
+
+ul.titl 
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+   
+}
+.header.titl{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 15px;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+.header:before {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    content: ' ';
+    background: #000;
+    opacity: 0.4;
+}
+.title
+{
+    float: left;
+}
+#share-buttons img 
+{
+width: 35px;
+padding: 5px;
+border: 0;
+box-shadow: 0;
+display: inline;
+}
+.title a
+{
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+.title a:hover 
+{
+    background-color: white;
+    color:black;
+}
